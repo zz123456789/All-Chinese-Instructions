@@ -1,0 +1,72 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '6.0.54'
+    id 'org.spongepowered.mixin' version '0.7.38'
+}
+
+group = 'dev.allchineseinstructions'
+version = mod_version
+base { archivesName = 'All-Chinese-Instructions-1.20.1' }
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(17)
+    withSourcesJar()
+}
+
+sourceSets {
+    gametest {}
+}
+
+minecraft {
+    mappings channel: 'official', version: minecraft_version
+    copyIdeResources = true
+    runs {
+        configureEach {
+            workingDirectory project.file('run')
+            property 'forge.logging.console.level', 'info'
+            property 'file.encoding', 'UTF-8'
+            mods { allchineseinstructions { source sourceSets.main } }
+        }
+        client {}
+        server { args '--nogui' }
+        gameTestServer {
+            property 'forge.enabledGameTestNamespaces', 'allchineseinstructions'
+            property 'allchineseinstructions.runTests', 'true'
+            mods { allchineseinstructions { source sourceSets.gametest } }
+        }
+    }
+}
+
+mixin {
+    add sourceSets.main, 'allchineseinstructions.refmap.json'
+    config 'allchineseinstructions.mixins.json'
+}
+
+repositories { mavenCentral() }
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+}
+
+tasks.named('processResources', ProcessResources) {
+    inputs.property 'version', project.version
+    filesMatching('META-INF/mods.toml') { expand version: project.version }
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
+tasks.withType(Javadoc).configureEach { options.encoding = 'UTF-8' }
+tasks.named('test', Test) { useJUnitPlatform() }
+tasks.named('jar', Jar) {
+    from('LICENSE')
+    manifest { attributes 'MixinConfigs': 'allchineseinstructions.mixins.json' }
+    finalizedBy 'reobfJar'
+}
+tasks.named('sourcesJar', Jar) {
+    from('LICENSE')
+}
+publishing {
+    publications {
+        mavenJava(MavenPublication) { from components.java }
+    }
+}

@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+issueTrackerURL="https://github.com/zz123456789/All-Chinese-Instructions/issues"
+[[mods]]
+modId="allchineseinstructions"
+version="${version}"
+displayName="All-Chinese Instructions / 中文指令"
+authors="All-Chinese Instructions"
+displayURL="https://github.com/zz123456789/All-Chinese-Instructions"
+description='''
+为 Minecraft 1.20.1 提供中文指令、中文选择器及筛选参数、中文 TAB 补全和中文函数路径。
+同时提供可扩展的中文指令库，保留英文指令和原版权限规则。
+'''
+[[dependencies.allchineseinstructions]]
+modId="forge"
+mandatory=true
+versionRange="[47.4.10,48)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.allchineseinstructions]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20.1,1.20.2)"
+ordering="NONE"
+side="BOTH"

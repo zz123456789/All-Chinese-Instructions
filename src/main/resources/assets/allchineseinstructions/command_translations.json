@@ -1,0 +1,2016 @@
+{
+  "commands": {
+    "advancement": [
+      "进度"
+    ],
+    "attribute": [
+      "属性"
+    ],
+    "ban": [
+      "封禁"
+    ],
+    "ban-ip": [
+      "封禁地址"
+    ],
+    "banlist": [
+      "封禁列表"
+    ],
+    "bossbar": [
+      "首领栏",
+      "血条"
+    ],
+    "clear": [
+      "清空物品"
+    ],
+    "clone": [
+      "克隆"
+    ],
+    "damage": [
+      "伤害"
+    ],
+    "data": [
+      "数据"
+    ],
+    "datapack": [
+      "数据包"
+    ],
+    "debug": [
+      "调试"
+    ],
+    "defaultgamemode": [
+      "默认游戏模式"
+    ],
+    "deop": [
+      "撤销管理员"
+    ],
+    "difficulty": [
+      "难度"
+    ],
+    "effect": [
+      "状态效果",
+      "效果"
+    ],
+    "enchant": [
+      "附魔"
+    ],
+    "execute": [
+      "执行"
+    ],
+    "experience": [
+      "经验"
+    ],
+    "fill": [
+      "填充"
+    ],
+    "fillbiome": [
+      "填充生物群系"
+    ],
+    "forceload": [
+      "强制加载"
+    ],
+    "function": [
+      "函数"
+    ],
+    "gamemode": [
+      "游戏模式"
+    ],
+    "gamerule": [
+      "游戏规则"
+    ],
+    "give": [
+      "给予"
+    ],
+    "help": [
+      "帮助"
+    ],
+    "item": [
+      "物品"
+    ],
+    "jfr": [
+      "飞行记录"
+    ],
+    "kick": [
+      "踢出"
+    ],
+    "kill": [
+      "清除实体",
+      "杀死"
+    ],
+    "list": [
+      "玩家列表"
+    ],
+    "locate": [
+      "定位"
+    ],
+    "loot": [
+      "战利品"
+    ],
+    "me": [
+      "动作"
+    ],
+    "msg": [
+      "私信"
+    ],
+    "op": [
+      "设为管理员"
+    ],
+    "pardon": [
+      "解除封禁"
+    ],
+    "pardon-ip": [
+      "解除地址封禁"
+    ],
+    "particle": [
+      "粒子"
+    ],
+    "perf": [
+      "性能"
+    ],
+    "place": [
+      "放置"
+    ],
+    "playsound": [
+      "播放声音"
+    ],
+    "publish": [
+      "开放局域网"
+    ],
+    "recipe": [
+      "配方"
+    ],
+    "reload": [
+      "重载"
+    ],
+    "return": [
+      "返回"
+    ],
+    "ride": [
+      "骑乘"
+    ],
+    "save-all": [
+      "保存全部"
+    ],
+    "save-off": [
+      "关闭自动保存"
+    ],
+    "save-on": [
+      "开启自动保存"
+    ],
+    "say": [
+      "说"
+    ],
+    "schedule": [
+      "计划",
+      "延时执行"
+    ],
+    "scoreboard": [
+      "计分板"
+    ],
+    "seed": [
+      "种子"
+    ],
+    "setblock": [
+      "设置方块"
+    ],
+    "setidletimeout": [
+      "设置挂机时限"
+    ],
+    "setworldspawn": [
+      "设置世界出生点"
+    ],
+    "spawnpoint": [
+      "设置出生点"
+    ],
+    "spectate": [
+      "旁观"
+    ],
+    "spreadplayers": [
+      "分散玩家"
+    ],
+    "stop": [
+      "停止服务器"
+    ],
+    "stopsound": [
+      "停止声音"
+    ],
+    "summon": [
+      "召唤"
+    ],
+    "tag": [
+      "标签"
+    ],
+    "team": [
+      "队伍"
+    ],
+    "teammsg": [
+      "队伍消息"
+    ],
+    "teleport": [
+      "传送"
+    ],
+    "tell": [
+      "告诉"
+    ],
+    "tellraw": [
+      "原始消息"
+    ],
+    "time": [
+      "时间"
+    ],
+    "title": [
+      "标题"
+    ],
+    "tm": [
+      "队聊"
+    ],
+    "tp": [
+      "传送到"
+    ],
+    "trigger": [
+      "触发器"
+    ],
+    "w": [
+      "密语"
+    ],
+    "weather": [
+      "天气"
+    ],
+    "whitelist": [
+      "白名单"
+    ],
+    "worldborder": [
+      "世界边界"
+    ],
+    "xp": [
+      "经验值"
+    ],
+    "test": [
+      "游戏测试"
+    ],
+    "spawn_armor_trims": [
+      "生成盔甲纹饰"
+    ]
+  },
+  "literals": {
+    "*": {
+      "add": [
+        "添加"
+      ],
+      "remove": [
+        "移除"
+      ],
+      "set": [
+        "设置"
+      ],
+      "get": [
+        "获取"
+      ],
+      "list": [
+        "列表"
+      ],
+      "clear": [
+        "清除"
+      ],
+      "reset": [
+        "重置"
+      ],
+      "query": [
+        "查询"
+      ],
+      "modify": [
+        "修改"
+      ],
+      "replace": [
+        "替换"
+      ],
+      "from": [
+        "来自"
+      ],
+      "with": [
+        "使用"
+      ],
+      "all": [
+        "全部"
+      ],
+      "block": [
+        "方块"
+      ],
+      "entity": [
+        "实体"
+      ],
+      "storage": [
+        "存储"
+      ],
+      "players": [
+        "玩家"
+      ],
+      "value": [
+        "数值"
+      ],
+      "name": [
+        "名称"
+      ],
+      "color": [
+        "颜色"
+      ],
+      "max": [
+        "最大值"
+      ],
+      "start": [
+        "开始"
+      ],
+      "stop": [
+        "停止"
+      ],
+      "function": [
+        "函数"
+      ],
+      "enable": [
+        "启用"
+      ],
+      "disable": [
+        "禁用"
+      ],
+      "on": [
+        "开启"
+      ],
+      "off": [
+        "关闭"
+      ],
+      "reload": [
+        "重载"
+      ],
+      "normal": [
+        "普通"
+      ],
+      "force": [
+        "强制"
+      ],
+      "append": [
+        "追加"
+      ],
+      "merge": [
+        "合并"
+      ],
+      "insert": [
+        "插入"
+      ],
+      "prepend": [
+        "前置"
+      ],
+      "keep": [
+        "保留"
+      ],
+      "destroy": [
+        "破坏"
+      ],
+      "hollow": [
+        "空心"
+      ],
+      "outline": [
+        "外框"
+      ],
+      "masked": [
+        "非空气"
+      ],
+      "filtered": [
+        "筛选"
+      ],
+      "move": [
+        "移动"
+      ],
+      "to": [
+        "到"
+      ],
+      "at": [
+        "在"
+      ],
+      "by": [
+        "由"
+      ],
+      "facing": [
+        "朝向"
+      ],
+      "structure": [
+        "结构"
+      ],
+      "biome": [
+        "生物群系"
+      ],
+      "predicate": [
+        "谓词"
+      ],
+      "score": [
+        "分数"
+      ],
+      "result": [
+        "结果"
+      ],
+      "success": [
+        "成功次数"
+      ],
+      "data": [
+        "数据"
+      ],
+      "bossbar": [
+        "首领栏"
+      ],
+      "short": [
+        "短整数"
+      ],
+      "int": [
+        "整数"
+      ],
+      "long": [
+        "长整数"
+      ],
+      "float": [
+        "单精度小数"
+      ],
+      "double": [
+        "双精度小数"
+      ],
+      "byte": [
+        "字节"
+      ],
+      "*": [
+        "全部匹配"
+      ]
+    },
+    "advancement": {
+      "grant": [
+        "授予"
+      ],
+      "revoke": [
+        "撤销"
+      ],
+      "everything": [
+        "所有进度"
+      ],
+      "only": [
+        "仅此"
+      ],
+      "from": [
+        "从此开始"
+      ],
+      "through": [
+        "经过"
+      ],
+      "until": [
+        "直到"
+      ]
+    },
+    "attribute": {
+      "base": [
+        "基础值"
+      ],
+      "modifier": [
+        "修饰符"
+      ],
+      "multiply": [
+        "乘总值"
+      ],
+      "multiply_base": [
+        "乘基础值"
+      ]
+    },
+    "banlist": {
+      "ips": [
+        "地址"
+      ]
+    },
+    "bossbar": {
+      "progress": [
+        "连续"
+      ],
+      "notched_6": [
+        "六段"
+      ],
+      "notched_10": [
+        "十段"
+      ],
+      "notched_12": [
+        "十二段"
+      ],
+      "notched_20": [
+        "二十段"
+      ],
+      "style": [
+        "样式"
+      ],
+      "visible": [
+        "可见"
+      ],
+      "pink": [
+        "粉红色"
+      ],
+      "blue": [
+        "蓝色"
+      ],
+      "red": [
+        "红色"
+      ],
+      "green": [
+        "绿色"
+      ],
+      "yellow": [
+        "黄色"
+      ],
+      "purple": [
+        "紫色"
+      ],
+      "white": [
+        "白色"
+      ]
+    },
+    "damage": {
+      "at": [
+        "位置"
+      ],
+      "by": [
+        "施害者"
+      ],
+      "from": [
+        "来源"
+      ]
+    },
+    "data": {
+      "string": [
+        "字符串"
+      ],
+      "value": [
+        "值"
+      ]
+    },
+    "datapack": {
+      "after": [
+        "之后"
+      ],
+      "before": [
+        "之前"
+      ],
+      "available": [
+        "可用"
+      ],
+      "enabled": [
+        "已启用"
+      ],
+      "first": [
+        "最先"
+      ],
+      "last": [
+        "最后"
+      ]
+    },
+    "difficulty": {
+      "peaceful": [
+        "和平"
+      ],
+      "easy": [
+        "简单"
+      ],
+      "normal": [
+        "普通"
+      ],
+      "hard": [
+        "困难"
+      ]
+    },
+    "effect": {
+      "give": [
+        "给予"
+      ],
+      "infinite": [
+        "无限"
+      ]
+    },
+    "execute": {
+      "align": [
+        "对齐"
+      ],
+      "anchored": [
+        "锚点"
+      ],
+      "as": [
+        "作为",
+        "以实体"
+      ],
+      "at": [
+        "位于"
+      ],
+      "facing": [
+        "朝向"
+      ],
+      "if": [
+        "如果"
+      ],
+      "unless": [
+        "除非"
+      ],
+      "in": [
+        "维度"
+      ],
+      "positioned": [
+        "定位"
+      ],
+      "rotated": [
+        "旋转"
+      ],
+      "run": [
+        "运行"
+      ],
+      "store": [
+        "存入"
+      ],
+      "blocks": [
+        "方块区域"
+      ],
+      "matches": [
+        "匹配"
+      ],
+      "on": [
+        "关系"
+      ],
+      "origin": [
+        "起源实体"
+      ],
+      "owner": [
+        "主人"
+      ],
+      "leasher": [
+        "牵引者"
+      ],
+      "target": [
+        "目标"
+      ],
+      "attacker": [
+        "攻击者"
+      ],
+      "vehicle": [
+        "坐骑"
+      ],
+      "passengers": [
+        "乘客"
+      ],
+      "controller": [
+        "控制者"
+      ],
+      "over": [
+        "高度图"
+      ],
+      "loaded": [
+        "已加载"
+      ],
+      "dimension": [
+        "维度为"
+      ],
+      "summon": [
+        "召唤"
+      ],
+      "<": [
+        "小于"
+      ],
+      "<=": [
+        "小于等于"
+      ],
+      "=": [
+        "等于"
+      ],
+      ">": [
+        "大于"
+      ],
+      ">=": [
+        "大于等于"
+      ]
+    },
+    "experience": {
+      "levels": [
+        "等级"
+      ],
+      "points": [
+        "经验点"
+      ]
+    },
+    "xp": {
+      "levels": [
+        "等级"
+      ],
+      "points": [
+        "经验点"
+      ]
+    },
+    "gamerule": {
+      "announceAdvancements": [
+        "通报进度"
+      ],
+      "blockExplosionDropDecay": [
+        "方块爆炸掉落衰减"
+      ],
+      "commandBlockOutput": [
+        "命令方块输出"
+      ],
+      "commandModificationBlockLimit": [
+        "命令修改方块上限"
+      ],
+      "disableElytraMovementCheck": [
+        "禁用鞘翅移动检查"
+      ],
+      "disableRaids": [
+        "禁用袭击"
+      ],
+      "doDaylightCycle": [
+        "昼夜更替"
+      ],
+      "doEntityDrops": [
+        "实体掉落"
+      ],
+      "doFireTick": [
+        "火焰蔓延"
+      ],
+      "doImmediateRespawn": [
+        "立即重生"
+      ],
+      "doInsomnia": [
+        "生成幻翼"
+      ],
+      "doLimitedCrafting": [
+        "限制合成"
+      ],
+      "doMobLoot": [
+        "生物掉落"
+      ],
+      "doMobSpawning": [
+        "生成生物"
+      ],
+      "doPatrolSpawning": [
+        "生成巡逻队"
+      ],
+      "doTileDrops": [
+        "方块掉落"
+      ],
+      "doTraderSpawning": [
+        "生成流浪商人"
+      ],
+      "doVinesSpread": [
+        "藤蔓蔓延"
+      ],
+      "doWardenSpawning": [
+        "生成监守者"
+      ],
+      "doWeatherCycle": [
+        "天气更替"
+      ],
+      "drowningDamage": [
+        "溺水伤害"
+      ],
+      "fallDamage": [
+        "跌落伤害"
+      ],
+      "fireDamage": [
+        "火焰伤害"
+      ],
+      "forgiveDeadPlayers": [
+        "原谅死亡玩家"
+      ],
+      "freezeDamage": [
+        "冰冻伤害"
+      ],
+      "globalSoundEvents": [
+        "全局声音事件"
+      ],
+      "keepInventory": [
+        "保留物品栏",
+        "死亡不掉落"
+      ],
+      "lavaSourceConversion": [
+        "熔岩源转化"
+      ],
+      "logAdminCommands": [
+        "记录管理员命令"
+      ],
+      "maxCommandChainLength": [
+        "命令链长度上限"
+      ],
+      "maxEntityCramming": [
+        "实体挤压上限"
+      ],
+      "mobExplosionDropDecay": [
+        "生物爆炸掉落衰减"
+      ],
+      "mobGriefing": [
+        "生物破坏"
+      ],
+      "naturalRegeneration": [
+        "自然恢复"
+      ],
+      "playersSleepingPercentage": [
+        "睡眠玩家百分比"
+      ],
+      "randomTickSpeed": [
+        "随机刻速度"
+      ],
+      "reducedDebugInfo": [
+        "简化调试信息"
+      ],
+      "sendCommandFeedback": [
+        "发送命令反馈"
+      ],
+      "showDeathMessages": [
+        "显示死亡消息"
+      ],
+      "snowAccumulationHeight": [
+        "积雪高度上限"
+      ],
+      "spawnRadius": [
+        "出生半径"
+      ],
+      "spectatorsGenerateChunks": [
+        "旁观者生成区块"
+      ],
+      "tntExplosionDropDecay": [
+        "炸药爆炸掉落衰减"
+      ],
+      "universalAnger": [
+        "普遍愤怒"
+      ],
+      "waterSourceConversion": [
+        "水源转化"
+      ]
+    },
+    "list": {
+      "uuids": [
+        "唯一标识"
+      ]
+    },
+    "locate": {
+      "poi": [
+        "兴趣点"
+      ]
+    },
+    "loot": {
+      "fish": [
+        "钓鱼"
+      ],
+      "give": [
+        "给予"
+      ],
+      "kill": [
+        "击杀"
+      ],
+      "loot": [
+        "战利品表"
+      ],
+      "mainhand": [
+        "主手"
+      ],
+      "mine": [
+        "挖掘"
+      ],
+      "offhand": [
+        "副手"
+      ],
+      "spawn": [
+        "生成"
+      ]
+    },
+    "place": {
+      "feature": [
+        "地物"
+      ],
+      "jigsaw": [
+        "拼图"
+      ],
+      "template": [
+        "模板"
+      ]
+    },
+    "recipe": {
+      "give": [
+        "给予"
+      ],
+      "take": [
+        "撤回"
+      ]
+    },
+    "ride": {
+      "mount": [
+        "乘坐"
+      ],
+      "dismount": [
+        "下骑"
+      ]
+    },
+    "save-all": {
+      "flush": [
+        "立即写入"
+      ]
+    },
+    "scoreboard": {
+      "objectives": [
+        "记分项"
+      ],
+      "displayname": [
+        "显示名称"
+      ],
+      "rendertype": [
+        "显示类型"
+      ],
+      "integer": [
+        "整数"
+      ],
+      "hearts": [
+        "红心"
+      ],
+      "setdisplay": [
+        "设置显示"
+      ],
+      "operation": [
+        "运算"
+      ]
+    },
+    "spreadplayers": {
+      "under": [
+        "低于"
+      ]
+    },
+    "team": {
+      "always": [
+        "始终"
+      ],
+      "never": [
+        "从不"
+      ],
+      "collisionRule": [
+        "碰撞规则"
+      ],
+      "deathMessageVisibility": [
+        "死亡消息可见性"
+      ],
+      "displayName": [
+        "显示名称"
+      ],
+      "empty": [
+        "清空"
+      ],
+      "friendlyFire": [
+        "友军伤害"
+      ],
+      "hideForOtherTeams": [
+        "对其他队伍隐藏"
+      ],
+      "hideForOwnTeam": [
+        "对本队隐藏"
+      ],
+      "join": [
+        "加入"
+      ],
+      "leave": [
+        "离开"
+      ],
+      "nametagVisibility": [
+        "名牌可见性"
+      ],
+      "prefix": [
+        "前缀"
+      ],
+      "pushOtherTeams": [
+        "碰撞其他队伍"
+      ],
+      "pushOwnTeam": [
+        "碰撞本队"
+      ],
+      "seeFriendlyInvisibles": [
+        "看见隐身队友"
+      ],
+      "suffix": [
+        "后缀"
+      ]
+    },
+    "time": {
+      "day": [
+        "白天"
+      ],
+      "daytime": [
+        "当日时间"
+      ],
+      "gametime": [
+        "游戏时间"
+      ],
+      "midnight": [
+        "午夜"
+      ],
+      "night": [
+        "夜晚"
+      ],
+      "noon": [
+        "正午"
+      ]
+    },
+    "title": {
+      "actionbar": [
+        "快捷栏"
+      ],
+      "subtitle": [
+        "副标题"
+      ],
+      "title": [
+        "主标题"
+      ],
+      "times": [
+        "时长"
+      ]
+    },
+    "weather": {
+      "clear": [
+        "晴天"
+      ],
+      "rain": [
+        "下雨"
+      ],
+      "thunder": [
+        "雷雨"
+      ]
+    },
+    "worldborder": {
+      "amount": [
+        "伤害量"
+      ],
+      "buffer": [
+        "缓冲距离"
+      ],
+      "center": [
+        "中心"
+      ],
+      "damage": [
+        "伤害"
+      ],
+      "distance": [
+        "距离"
+      ],
+      "time": [
+        "时间"
+      ],
+      "warning": [
+        "警告"
+      ]
+    },
+    "test": {
+      "runthis": [
+        "运行当前测试"
+      ],
+      "runthese": [
+        "运行附近测试"
+      ],
+      "runfailed": [
+        "重试失败测试"
+      ],
+      "run": [
+        "运行"
+      ],
+      "runall": [
+        "运行全部"
+      ],
+      "export": [
+        "导出"
+      ],
+      "exportthis": [
+        "导出当前测试"
+      ],
+      "import": [
+        "导入"
+      ],
+      "pos": [
+        "位置"
+      ],
+      "create": [
+        "创建"
+      ],
+      "clearall": [
+        "清除全部"
+      ]
+    },
+    "playsound": {
+      "master": [
+        "主音量"
+      ],
+      "music": [
+        "音乐"
+      ],
+      "record": [
+        "唱片"
+      ],
+      "weather": [
+        "天气"
+      ],
+      "block": [
+        "方块"
+      ],
+      "hostile": [
+        "敌对生物"
+      ],
+      "neutral": [
+        "友好生物"
+      ],
+      "player": [
+        "玩家"
+      ],
+      "ambient": [
+        "环境"
+      ],
+      "voice": [
+        "语音"
+      ]
+    },
+    "stopsound": {
+      "master": [
+        "主音量"
+      ],
+      "music": [
+        "音乐"
+      ],
+      "record": [
+        "唱片"
+      ],
+      "weather": [
+        "天气"
+      ],
+      "block": [
+        "方块"
+      ],
+      "hostile": [
+        "敌对生物"
+      ],
+      "neutral": [
+        "友好生物"
+      ],
+      "player": [
+        "玩家"
+      ],
+      "ambient": [
+        "环境"
+      ],
+      "voice": [
+        "语音"
+      ]
+    }
+  },
+  "arguments": {
+    "brigadier:bool": {
+      "true": [
+        "真",
+        "是",
+        "开启"
+      ],
+      "false": [
+        "假",
+        "否",
+        "关闭"
+      ]
+    },
+    "minecraft:gamemode": {
+      "survival": [
+        "生存"
+      ],
+      "creative": [
+        "创造"
+      ],
+      "adventure": [
+        "冒险"
+      ],
+      "spectator": [
+        "旁观"
+      ]
+    },
+    "minecraft:color": {
+      "black": [
+        "黑色"
+      ],
+      "dark_blue": [
+        "深蓝色"
+      ],
+      "dark_green": [
+        "深绿色"
+      ],
+      "dark_aqua": [
+        "深青色"
+      ],
+      "dark_red": [
+        "深红色"
+      ],
+      "dark_purple": [
+        "深紫色"
+      ],
+      "gold": [
+        "金色"
+      ],
+      "gray": [
+        "灰色"
+      ],
+      "dark_gray": [
+        "深灰色"
+      ],
+      "blue": [
+        "蓝色"
+      ],
+      "green": [
+        "绿色"
+      ],
+      "aqua": [
+        "青色"
+      ],
+      "red": [
+        "红色"
+      ],
+      "light_purple": [
+        "浅紫色"
+      ],
+      "yellow": [
+        "黄色"
+      ],
+      "white": [
+        "白色"
+      ],
+      "reset": [
+        "重置"
+      ]
+    },
+    "minecraft:entity_anchor": {
+      "eyes": [
+        "眼部"
+      ],
+      "feet": [
+        "脚部"
+      ]
+    },
+    "minecraft:swizzle": {
+      "x": [
+        "横轴"
+      ],
+      "y": [
+        "纵轴"
+      ],
+      "z": [
+        "深轴"
+      ],
+      "xy": [
+        "横纵轴"
+      ],
+      "yx": [
+        "纵横轴"
+      ],
+      "xz": [
+        "水平",
+        "横深轴"
+      ],
+      "zx": [
+        "深横轴"
+      ],
+      "yz": [
+        "纵深轴"
+      ],
+      "zy": [
+        "深纵轴"
+      ],
+      "xyz": [
+        "三轴",
+        "横纵深轴"
+      ],
+      "xzy": [
+        "横深纵轴"
+      ],
+      "yxz": [
+        "纵横深轴"
+      ],
+      "yzx": [
+        "纵深横轴"
+      ],
+      "zxy": [
+        "深横纵轴"
+      ],
+      "zyx": [
+        "深纵横轴"
+      ]
+    },
+    "minecraft:heightmap": {
+      "world_surface": [
+        "世界表面"
+      ],
+      "ocean_floor": [
+        "海床"
+      ],
+      "motion_blocking": [
+        "阻挡运动"
+      ],
+      "motion_blocking_no_leaves": [
+        "阻挡运动且无树叶"
+      ]
+    },
+    "minecraft:template_mirror": {
+      "none": [
+        "不镜像"
+      ],
+      "left_right": [
+        "左右镜像"
+      ],
+      "front_back": [
+        "前后镜像"
+      ]
+    },
+    "minecraft:template_rotation": {
+      "180": [
+        "一百八十度"
+      ],
+      "none": [
+        "不旋转"
+      ],
+      "clockwise_90": [
+        "顺时针九十度"
+      ],
+      "counterclockwise_90": [
+        "逆时针九十度"
+      ]
+    },
+    "minecraft:dimension": {
+      "minecraft:overworld": [
+        "主世界"
+      ],
+      "minecraft:the_nether": [
+        "下界"
+      ],
+      "minecraft:the_end": [
+        "末地"
+      ]
+    },
+    "minecraft:operation": {
+      "=": [
+        "赋值"
+      ],
+      "+=": [
+        "加上"
+      ],
+      "-=": [
+        "减去"
+      ],
+      "*=": [
+        "乘以"
+      ],
+      "/=": [
+        "除以"
+      ],
+      "%=": [
+        "取余"
+      ],
+      "<": [
+        "取较小"
+      ],
+      ">": [
+        "取较大"
+      ],
+      "><": [
+        "交换"
+      ]
+    },
+    "minecraft:scoreboard_slot": {
+      "list": [
+        "玩家列表"
+      ],
+      "sidebar": [
+        "侧边栏"
+      ],
+      "belowName": [
+        "名称下方"
+      ],
+      "sidebar.team.black": [
+        "侧边栏.队伍.黑色"
+      ],
+      "sidebar.team.dark_blue": [
+        "侧边栏.队伍.深蓝色"
+      ],
+      "sidebar.team.dark_green": [
+        "侧边栏.队伍.深绿色"
+      ],
+      "sidebar.team.dark_aqua": [
+        "侧边栏.队伍.深青色"
+      ],
+      "sidebar.team.dark_red": [
+        "侧边栏.队伍.深红色"
+      ],
+      "sidebar.team.dark_purple": [
+        "侧边栏.队伍.深紫色"
+      ],
+      "sidebar.team.gold": [
+        "侧边栏.队伍.金色"
+      ],
+      "sidebar.team.gray": [
+        "侧边栏.队伍.灰色"
+      ],
+      "sidebar.team.dark_gray": [
+        "侧边栏.队伍.深灰色"
+      ],
+      "sidebar.team.blue": [
+        "侧边栏.队伍.蓝色"
+      ],
+      "sidebar.team.green": [
+        "侧边栏.队伍.绿色"
+      ],
+      "sidebar.team.aqua": [
+        "侧边栏.队伍.青色"
+      ],
+      "sidebar.team.red": [
+        "侧边栏.队伍.红色"
+      ],
+      "sidebar.team.light_purple": [
+        "侧边栏.队伍.浅紫色"
+      ],
+      "sidebar.team.yellow": [
+        "侧边栏.队伍.黄色"
+      ],
+      "sidebar.team.white": [
+        "侧边栏.队伍.白色"
+      ]
+    },
+    "minecraft:objective_criteria": {
+      "dummy": [
+        "虚拟"
+      ],
+      "trigger": [
+        "触发器"
+      ],
+      "deathCount": [
+        "死亡次数"
+      ],
+      "playerKillCount": [
+        "击杀玩家数"
+      ],
+      "totalKillCount": [
+        "总击杀数"
+      ],
+      "health": [
+        "生命值"
+      ],
+      "food": [
+        "饥饿值"
+      ],
+      "air": [
+        "氧气值"
+      ],
+      "armor": [
+        "护甲值"
+      ],
+      "xp": [
+        "经验值"
+      ],
+      "level": [
+        "经验等级"
+      ],
+      "teamkill.black": [
+        "击杀队伍.黑色"
+      ],
+      "killedByTeam.black": [
+        "被队伍击杀.黑色"
+      ],
+      "teamkill.dark_blue": [
+        "击杀队伍.深蓝色"
+      ],
+      "killedByTeam.dark_blue": [
+        "被队伍击杀.深蓝色"
+      ],
+      "teamkill.dark_green": [
+        "击杀队伍.深绿色"
+      ],
+      "killedByTeam.dark_green": [
+        "被队伍击杀.深绿色"
+      ],
+      "teamkill.dark_aqua": [
+        "击杀队伍.深青色"
+      ],
+      "killedByTeam.dark_aqua": [
+        "被队伍击杀.深青色"
+      ],
+      "teamkill.dark_red": [
+        "击杀队伍.深红色"
+      ],
+      "killedByTeam.dark_red": [
+        "被队伍击杀.深红色"
+      ],
+      "teamkill.dark_purple": [
+        "击杀队伍.深紫色"
+      ],
+      "killedByTeam.dark_purple": [
+        "被队伍击杀.深紫色"
+      ],
+      "teamkill.gold": [
+        "击杀队伍.金色"
+      ],
+      "killedByTeam.gold": [
+        "被队伍击杀.金色"
+      ],
+      "teamkill.gray": [
+        "击杀队伍.灰色"
+      ],
+      "killedByTeam.gray": [
+        "被队伍击杀.灰色"
+      ],
+      "teamkill.dark_gray": [
+        "击杀队伍.深灰色"
+      ],
+      "killedByTeam.dark_gray": [
+        "被队伍击杀.深灰色"
+      ],
+      "teamkill.blue": [
+        "击杀队伍.蓝色"
+      ],
+      "killedByTeam.blue": [
+        "被队伍击杀.蓝色"
+      ],
+      "teamkill.green": [
+        "击杀队伍.绿色"
+      ],
+      "killedByTeam.green": [
+        "被队伍击杀.绿色"
+      ],
+      "teamkill.aqua": [
+        "击杀队伍.青色"
+      ],
+      "killedByTeam.aqua": [
+        "被队伍击杀.青色"
+      ],
+      "teamkill.red": [
+        "击杀队伍.红色"
+      ],
+      "killedByTeam.red": [
+        "被队伍击杀.红色"
+      ],
+      "teamkill.light_purple": [
+        "击杀队伍.浅紫色"
+      ],
+      "killedByTeam.light_purple": [
+        "被队伍击杀.浅紫色"
+      ],
+      "teamkill.yellow": [
+        "击杀队伍.黄色"
+      ],
+      "killedByTeam.yellow": [
+        "被队伍击杀.黄色"
+      ],
+      "teamkill.white": [
+        "击杀队伍.白色"
+      ],
+      "killedByTeam.white": [
+        "被队伍击杀.白色"
+      ]
+    },
+    "minecraft:item_slot": {
+      "weapon": [
+        "武器"
+      ],
+      "weapon.mainhand": [
+        "主手"
+      ],
+      "weapon.offhand": [
+        "副手"
+      ],
+      "armor.head": [
+        "头盔"
+      ],
+      "armor.chest": [
+        "胸甲"
+      ],
+      "armor.legs": [
+        "护腿"
+      ],
+      "armor.feet": [
+        "靴子"
+      ],
+      "horse.saddle": [
+        "马鞍"
+      ],
+      "horse.armor": [
+        "马铠"
+      ],
+      "horse.chest": [
+        "马箱子"
+      ],
+      "container.0": [
+        "容器.0"
+      ],
+      "container.1": [
+        "容器.1"
+      ],
+      "container.2": [
+        "容器.2"
+      ],
+      "container.3": [
+        "容器.3"
+      ],
+      "container.4": [
+        "容器.4"
+      ],
+      "container.5": [
+        "容器.5"
+      ],
+      "container.6": [
+        "容器.6"
+      ],
+      "container.7": [
+        "容器.7"
+      ],
+      "container.8": [
+        "容器.8"
+      ],
+      "container.9": [
+        "容器.9"
+      ],
+      "container.10": [
+        "容器.10"
+      ],
+      "container.11": [
+        "容器.11"
+      ],
+      "container.12": [
+        "容器.12"
+      ],
+      "container.13": [
+        "容器.13"
+      ],
+      "container.14": [
+        "容器.14"
+      ],
+      "container.15": [
+        "容器.15"
+      ],
+      "container.16": [
+        "容器.16"
+      ],
+      "container.17": [
+        "容器.17"
+      ],
+      "container.18": [
+        "容器.18"
+      ],
+      "container.19": [
+        "容器.19"
+      ],
+      "container.20": [
+        "容器.20"
+      ],
+      "container.21": [
+        "容器.21"
+      ],
+      "container.22": [
+        "容器.22"
+      ],
+      "container.23": [
+        "容器.23"
+      ],
+      "container.24": [
+        "容器.24"
+      ],
+      "container.25": [
+        "容器.25"
+      ],
+      "container.26": [
+        "容器.26"
+      ],
+      "container.27": [
+        "容器.27"
+      ],
+      "container.28": [
+        "容器.28"
+      ],
+      "container.29": [
+        "容器.29"
+      ],
+      "container.30": [
+        "容器.30"
+      ],
+      "container.31": [
+        "容器.31"
+      ],
+      "container.32": [
+        "容器.32"
+      ],
+      "container.33": [
+        "容器.33"
+      ],
+      "container.34": [
+        "容器.34"
+      ],
+      "container.35": [
+        "容器.35"
+      ],
+      "container.36": [
+        "容器.36"
+      ],
+      "container.37": [
+        "容器.37"
+      ],
+      "container.38": [
+        "容器.38"
+      ],
+      "container.39": [
+        "容器.39"
+      ],
+      "container.40": [
+        "容器.40"
+      ],
+      "container.41": [
+        "容器.41"
+      ],
+      "container.42": [
+        "容器.42"
+      ],
+      "container.43": [
+        "容器.43"
+      ],
+      "container.44": [
+        "容器.44"
+      ],
+      "container.45": [
+        "容器.45"
+      ],
+      "container.46": [
+        "容器.46"
+      ],
+      "container.47": [
+        "容器.47"
+      ],
+      "container.48": [
+        "容器.48"
+      ],
+      "container.49": [
+        "容器.49"
+      ],
+      "container.50": [
+        "容器.50"
+      ],
+      "container.51": [
+        "容器.51"
+      ],
+      "container.52": [
+        "容器.52"
+      ],
+      "container.53": [
+        "容器.53"
+      ],
+      "hotbar.0": [
+        "快捷栏.0"
+      ],
+      "hotbar.1": [
+        "快捷栏.1"
+      ],
+      "hotbar.2": [
+        "快捷栏.2"
+      ],
+      "hotbar.3": [
+        "快捷栏.3"
+      ],
+      "hotbar.4": [
+        "快捷栏.4"
+      ],
+      "hotbar.5": [
+        "快捷栏.5"
+      ],
+      "hotbar.6": [
+        "快捷栏.6"
+      ],
+      "hotbar.7": [
+        "快捷栏.7"
+      ],
+      "hotbar.8": [
+        "快捷栏.8"
+      ],
+      "inventory.0": [
+        "物品栏.0"
+      ],
+      "inventory.1": [
+        "物品栏.1"
+      ],
+      "inventory.2": [
+        "物品栏.2"
+      ],
+      "inventory.3": [
+        "物品栏.3"
+      ],
+      "inventory.4": [
+        "物品栏.4"
+      ],
+      "inventory.5": [
+        "物品栏.5"
+      ],
+      "inventory.6": [
+        "物品栏.6"
+      ],
+      "inventory.7": [
+        "物品栏.7"
+      ],
+      "inventory.8": [
+        "物品栏.8"
+      ],
+      "inventory.9": [
+        "物品栏.9"
+      ],
+      "inventory.10": [
+        "物品栏.10"
+      ],
+      "inventory.11": [
+        "物品栏.11"
+      ],
+      "inventory.12": [
+        "物品栏.12"
+      ],
+      "inventory.13": [
+        "物品栏.13"
+      ],
+      "inventory.14": [
+        "物品栏.14"
+      ],
+      "inventory.15": [
+        "物品栏.15"
+      ],
+      "inventory.16": [
+        "物品栏.16"
+      ],
+      "inventory.17": [
+        "物品栏.17"
+      ],
+      "inventory.18": [
+        "物品栏.18"
+      ],
+      "inventory.19": [
+        "物品栏.19"
+      ],
+      "inventory.20": [
+        "物品栏.20"
+      ],
+      "inventory.21": [
+        "物品栏.21"
+      ],
+      "inventory.22": [
+        "物品栏.22"
+      ],
+      "inventory.23": [
+        "物品栏.23"
+      ],
+      "inventory.24": [
+        "物品栏.24"
+      ],
+      "inventory.25": [
+        "物品栏.25"
+      ],
+      "inventory.26": [
+        "物品栏.26"
+      ],
+      "enderchest.0": [
+        "末影箱.0"
+      ],
+      "enderchest.1": [
+        "末影箱.1"
+      ],
+      "enderchest.2": [
+        "末影箱.2"
+      ],
+      "enderchest.3": [
+        "末影箱.3"
+      ],
+      "enderchest.4": [
+        "末影箱.4"
+      ],
+      "enderchest.5": [
+        "末影箱.5"
+      ],
+      "enderchest.6": [
+        "末影箱.6"
+      ],
+      "enderchest.7": [
+        "末影箱.7"
+      ],
+      "enderchest.8": [
+        "末影箱.8"
+      ],
+      "enderchest.9": [
+        "末影箱.9"
+      ],
+      "enderchest.10": [
+        "末影箱.10"
+      ],
+      "enderchest.11": [
+        "末影箱.11"
+      ],
+      "enderchest.12": [
+        "末影箱.12"
+      ],
+      "enderchest.13": [
+        "末影箱.13"
+      ],
+      "enderchest.14": [
+        "末影箱.14"
+      ],
+      "enderchest.15": [
+        "末影箱.15"
+      ],
+      "enderchest.16": [
+        "末影箱.16"
+      ],
+      "enderchest.17": [
+        "末影箱.17"
+      ],
+      "enderchest.18": [
+        "末影箱.18"
+      ],
+      "enderchest.19": [
+        "末影箱.19"
+      ],
+      "enderchest.20": [
+        "末影箱.20"
+      ],
+      "enderchest.21": [
+        "末影箱.21"
+      ],
+      "enderchest.22": [
+        "末影箱.22"
+      ],
+      "enderchest.23": [
+        "末影箱.23"
+      ],
+      "enderchest.24": [
+        "末影箱.24"
+      ],
+      "enderchest.25": [
+        "末影箱.25"
+      ],
+      "enderchest.26": [
+        "末影箱.26"
+      ],
+      "villager.0": [
+        "村民.0"
+      ],
+      "villager.1": [
+        "村民.1"
+      ],
+      "villager.2": [
+        "村民.2"
+      ],
+      "villager.3": [
+        "村民.3"
+      ],
+      "villager.4": [
+        "村民.4"
+      ],
+      "villager.5": [
+        "村民.5"
+      ],
+      "villager.6": [
+        "村民.6"
+      ],
+      "villager.7": [
+        "村民.7"
+      ],
+      "horse.0": [
+        "马.0"
+      ],
+      "horse.1": [
+        "马.1"
+      ],
+      "horse.2": [
+        "马.2"
+      ],
+      "horse.3": [
+        "马.3"
+      ],
+      "horse.4": [
+        "马.4"
+      ],
+      "horse.5": [
+        "马.5"
+      ],
+      "horse.6": [
+        "马.6"
+      ],
+      "horse.7": [
+        "马.7"
+      ],
+      "horse.8": [
+        "马.8"
+      ],
+      "horse.9": [
+        "马.9"
+      ],
+      "horse.10": [
+        "马.10"
+      ],
+      "horse.11": [
+        "马.11"
+      ],
+      "horse.12": [
+        "马.12"
+      ],
+      "horse.13": [
+        "马.13"
+      ],
+      "horse.14": [
+        "马.14"
+      ]
+    }
+  }
+}
