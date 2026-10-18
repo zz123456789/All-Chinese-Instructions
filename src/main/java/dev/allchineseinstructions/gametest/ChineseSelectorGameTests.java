@@ -390,20 +390,20 @@ public final class ChineseSelectorGameTests {
         assertSuggestion(helper, "标签 选择所有实体[类型=minecraft:armor_", "minecraft:armor_stand",
                 "标签 选择所有实体[类型=minecraft:armor_stand");
         assertSuggestion(helper, "计分板 玩家 重置 选择所", "选择所有实体", "计分板 玩家 重置 选择所有实体");
-        assertSuggestion(helper, "op 选择所", "选择所有玩家", "op 选择所有玩家");
-        for (String command : List.of("deop", "whitelist add", "whitelist remove", "pardon")) {
+        assertSuggestion(helper, "设为管理员 选择所", "选择所有玩家", "设为管理员 选择所有玩家");
+        for (String command : List.of("撤销管理员", "白名单 添加", "白名单 移除", "解除封禁")) {
             assertSuggestion(helper, command + " 选择所", "选择所有玩家", command + " 选择所有玩家");
         }
-        assertSuggestion(helper, "op 选择所有玩家[游戏模式=创", "创造", "op 选择所有玩家[游戏模式=创造");
-        assertSuggestion(helper, "op 选择所有实体[类型=minecraft:pla", "minecraft:player",
-                "op 选择所有实体[类型=minecraft:player");
-        String invalidPlayerType = "op 选择所有玩家[类型=minecraft:pla";
+        assertSuggestion(helper, "设为管理员 选择所有玩家[游戏模式=创", "创造", "设为管理员 选择所有玩家[游戏模式=创造");
+        assertSuggestion(helper, "设为管理员 选择所有实体[类型=minecraft:pla", "minecraft:player",
+                "设为管理员 选择所有实体[类型=minecraft:player");
+        String invalidPlayerType = "设为管理员 选择所有玩家[类型=minecraft:pla";
         Suggestions invalidPlayerTypes = dispatcher(helper).getCompletionSuggestions(
                 dispatcher(helper).parse(invalidPlayerType, source(helper))).join();
         helper.assertFalse(invalidPlayerTypes.getList().stream().anyMatch(suggestion -> suggestion.apply(invalidPlayerType)
-                .equals("op 选择所有玩家[类型=minecraft:player")),
+                .equals("设为管理员 选择所有玩家[类型=minecraft:player")),
                 "Players-only selector offered an inapplicable entity-type option");
-        assertSuggestion(helper, "op @", "@a", "op @a");
+        assertSuggestion(helper, "设为管理员 @", "@a", "设为管理员 @a");
         helper.succeed();
     }
 

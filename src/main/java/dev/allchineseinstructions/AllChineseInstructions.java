@@ -10,6 +10,8 @@ import dev.allchineseinstructions.api.RegisterChineseTranslationsEvent;
 import dev.allchineseinstructions.argument.LocalizedArgumentInfo;
 import dev.allchineseinstructions.argument.LocalizedArgumentType;
 import dev.allchineseinstructions.command.ChineseCommandTree;
+import dev.allchineseinstructions.command.EnglishCommandPolicy;
+import dev.allchineseinstructions.config.ChineseCommandsConfig;
 import dev.allchineseinstructions.gametest.ChineseCommandsGameTests;
 import dev.allchineseinstructions.gametest.ChineseSelectorGameTests;
 import dev.allchineseinstructions.command.ArgumentNodeAdapter;
@@ -24,8 +26,12 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraft.network.chat.Component;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.registries.DeferredRegister;
@@ -44,10 +50,13 @@ public final class AllChineseInstructions {
     }
 
     public AllChineseInstructions() {
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ChineseCommandsConfig.SPEC,
+                ChineseCommandsConfig.FILE_NAME);
         ARGUMENT_TYPES.register(FMLJavaModLoadingContext.get().getModEventBus());
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ChineseCommandsGameTests::register);
         FMLJavaModLoadingContext.get().getModEventBus().addListener(ChineseSelectorGameTests::register);
         MinecraftForge.EVENT_BUS.addListener(EventPriority.LOWEST, this::registerCommands);
+        MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGHEST, this::checkEnglishCommand);
     }
 
     private void registerCommands(RegisterCommandsEvent event) {
@@ -68,12 +77,23 @@ public final class AllChineseInstructions {
             }
         }
         MinecraftForge.EVENT_BUS.post(new RegisterChineseTranslationsEvent(translations));
+        boolean allowEnglish = ChineseCommandsConfig.allowEnglishCommands();
         ChineseCommandTree.install(event.getDispatcher(), translations,
-                node -> decorateArgument(node, translations), LOGGER::warn);
+                node -> decorateArgument(node, translations, allowEnglish), LOGGER::warn);
+        EnglishCommandPolicy.install(event.getDispatcher(), () -> allowEnglish);
         LOGGER.info("中文指令已注册，共 {} 个顶层指令节点", event.getDispatcher().getRoot().getChildren().size());
     }
 
-    private static <S> void decorateArgument(ArgumentCommandNode<S, ?> node, ChineseTranslationRegistry translations) {
+    private void checkEnglishCommand(CommandEvent event) {
+        if (EnglishCommandPolicy.blockedInput(event.getParseResults())) {
+            event.setCanceled(true);
+            event.getParseResults().getContext().getSource().sendFailure(
+                    Component.literal(ChineseCommandsConfig.RESTRICTION_MESSAGE));
+        }
+    }
+
+    private static <S> void decorateArgument(ArgumentCommandNode<S, ?> node, ChineseTranslationRegistry translations,
+                                             boolean allowEnglish) {
         ProfileSelectorSuggestions.install(node);
         if (node.getType() instanceof LocalizedArgumentType<?>) return;
         if (!ArgumentTypeInfos.isClassRecognized(node.getType().getClass())) return;
@@ -84,14 +104,16 @@ public final class AllChineseInstructions {
         boolean chineseWords = node.getType() instanceof StringArgumentType stringType
                 && stringType.getType() != StringArgumentType.StringType.GREEDY_PHRASE;
         if (!aliases.isEmpty() || chineseWords) {
-            var localized = new LocalizedArgumentType<>(node.getType(), aliases);
+            var localized = new LocalizedArgumentType<>(node.getType(), aliases, allowEnglish);
             ArgumentNodeAdapter.setType(node, localized);
             var originalProvider = node.getCustomSuggestions();
             if (originalProvider != null) {
                 com.mojang.brigadier.suggestion.SuggestionProvider<S> provider = (context, builder) ->
                         originalProvider.getSuggestions(context, builder).thenCombine(
                                 localized.listSuggestions(context, new SuggestionsBuilder(builder.getInput(), builder.getStart())),
-                                (original, translated) -> Suggestions.merge(builder.getInput(), java.util.List.of(original, translated)));
+                                (original, translated) -> localized.filterSuggestions(
+                                        Suggestions.merge(builder.getInput(), java.util.List.of(original, translated)),
+                                        builder.getInput()));
                 ArgumentNodeAdapter.setSuggestions(node, provider);
             }
         }

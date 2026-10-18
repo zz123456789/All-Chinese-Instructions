@@ -29,6 +29,7 @@ public final class LocalizedArgumentInfo
             buffer.writeVarInt(aliases.size());
             aliases.forEach(alias -> buffer.writeUtf(alias, LocalizedArgumentType.MAX_TOKEN_LENGTH));
         });
+        buffer.writeBoolean(template.allowEnglish);
     }
 
     @Override
@@ -52,7 +53,7 @@ public final class LocalizedArgumentInfo
                 throw new IllegalArgumentException("Duplicate canonical argument token: " + canonical);
             }
         }
-        return new Template(delegate, aliases);
+        return new Template(delegate, aliases, buffer.readBoolean());
     }
 
     @Override
@@ -74,12 +75,14 @@ public final class LocalizedArgumentInfo
             aliasesJson.add(canonical, values);
         });
         json.add("aliases", aliasesJson);
+        json.addProperty("allowEnglish", template.allowEnglish);
     }
 
     @Override
     public Template unpack(LocalizedArgumentType<?> argument) {
         // byClass/unpack deliberately rejects unregistered delegate classes.
-        return new Template(ArgumentTypeInfos.unpack(argument.getDelegate()), argument.getAliases());
+        return new Template(ArgumentTypeInfos.unpack(argument.getDelegate()), argument.getAliases(),
+                argument.isEnglishAllowed());
     }
 
     private static int readCount(FriendlyByteBuf buffer, int maximum) {
@@ -120,10 +123,17 @@ public final class LocalizedArgumentInfo
     public final class Template implements ArgumentTypeInfo.Template<LocalizedArgumentType<?>> {
         private final ArgumentTypeInfo.Template<?> delegate;
         private final Map<String, List<String>> aliases;
+        private final boolean allowEnglish;
 
         public Template(ArgumentTypeInfo.Template<?> delegate, Map<String, List<String>> aliases) {
+            this(delegate, aliases, true);
+        }
+
+        public Template(ArgumentTypeInfo.Template<?> delegate, Map<String, List<String>> aliases,
+                        boolean allowEnglish) {
             this.delegate = Objects.requireNonNull(delegate, "delegate");
             this.aliases = LocalizedArgumentType.copyAliases(aliases);
+            this.allowEnglish = allowEnglish;
         }
 
         public ArgumentTypeInfo.Template<?> getDelegate() {
@@ -134,9 +144,13 @@ public final class LocalizedArgumentInfo
             return aliases;
         }
 
+        public boolean isEnglishAllowed() {
+            return allowEnglish;
+        }
+
         @Override
         public LocalizedArgumentType<?> instantiate(CommandBuildContext context) {
-            return new LocalizedArgumentType<>(delegate.instantiate(context), aliases);
+            return new LocalizedArgumentType<>(delegate.instantiate(context), aliases, allowEnglish);
         }
 
         @Override

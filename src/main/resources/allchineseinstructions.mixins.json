@@ -4,6 +4,6 @@
   "package": "dev.allchineseinstructions.mixin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "allchineseinstructions.refmap.json",
-  "mixins": ["ResourceLocationMixin", "FileUtilMixin", "NamedArgumentMixin", "EntitySelectorParserMixin", "EntitySelectorOptionsMixin", "ScoreHolderArgumentMixin", "GameProfileArgumentMixin", "MessageArgumentMixin"],
+  "mixins": ["ResourceLocationMixin", "FileUtilMixin", "NamedArgumentMixin", "EntitySelectorParserMixin", "EntitySelectorOptionsMixin", "ScoreHolderArgumentMixin", "GameProfileArgumentMixin", "MessageArgumentMixin", "CommandSuggestionsMixin"],
   "injectors": { "defaultRequire": 1 }
 }

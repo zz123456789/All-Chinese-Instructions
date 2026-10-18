@@ -1,6 +1,6 @@
 # All-Chinese Instructions 的两平台项目填写与发布记录
 
-首发版本固定为 **1.0.0**。CurseForge、Modrinth 的填写字段、共用介绍、发布日志、图片说明和上传记录均保留在本文件中。图片在 `assets` 文件夹，模组 JAR 与本文件放在一起。已创建项目的字段可用于后续编辑，不要重复创建项目或上传同一版本。
+首发版本固定为 **1.0.0**。本次加入英文指令配置后，以新版 JAR 替换此前的 1.0.0 文件。CurseForge、Modrinth 的填写字段、共用介绍、发布日志、图片说明和上传记录均保留在本文件中。图片在 `assets` 文件夹，模组 JAR 与本文件放在一起。使用已创建的项目更新，不要重复创建项目；替换文件后按平台实际结果更新第 7 节记录。
 
 ## 1 创建项目 General
 
@@ -20,7 +20,7 @@
 **Summary（只复制这一行英文）：**
 
 ```text
-Chinese commands, selectors, TAB completion, and function paths for Minecraft 1.20.1 Forge. Extensible library with English compatibility.
+Chinese commands, selectors, TAB completion and function paths for Minecraft 1.20.1 Forge. English commands are optional via configuration.
 ```
 
 先选 `Class = Mods`，再选主分类和附加分类。必填项完成后点击 **Next**。`Unlisted project` 控制项目是否公开列出，不是版本成熟度选项。
@@ -39,11 +39,14 @@ Chinese commands, selectors, TAB completion, and function paths for Minecraft 1.
 | Commands | Chinese aliases for vanilla commands and subcommands, all 45 game rules, and supported values from 13 argument types |
 | Selectors | All 5 selectors and all 21 filter options, with Chinese TAB completion |
 | Functions | Chinese commands, function paths, namespaces, folders, and function tags |
+| English commands | Disabled by default; enable `allowEnglishCommands` and reload to use both languages |
 | License | MIT |
 
-**All-Chinese Instructions（中文指令）** brings Chinese command syntax to Minecraft and provides an extensible library for other Forge mods. Use Chinese names in chat, command blocks, and UTF-8 `.mcfunction` files while keeping English commands and mixed-language syntax available.
+**All-Chinese Instructions（中文指令）** brings Chinese command syntax to Minecraft and provides an extensible library for other Forge mods. Use Chinese names in chat, command blocks, and UTF-8 `.mcfunction` files. English command keywords and translated fixed argument values are hidden from suggestions and disabled by default; a configuration option restores English and mixed-language syntax.
 
 Place `All-Chinese-Instructions-1.20.1-1.0.0.jar` in the instance's `mods` folder. Single-player requires one installation; multiplayer requires the same mod on **the server and every client**.
+
+This revision keeps version **1.0.0** but updates the argument synchronization format. Replace the JAR on the server and every client together; do not mix the earlier and revised 1.0.0 files.
 
 ## Using Chinese commands
 
@@ -55,7 +58,7 @@ Place `All-Chinese-Instructions-1.20.1-1.0.0.jar` in the instance's `mods` folde
 | Set clear weather | `/天气 晴天` |
 | Set daytime | `/时间 设置 白天` |
 
-Type `/游` and press **TAB** to complete `/游戏模式`. After `/游戏模式 `, TAB offers Chinese values such as `生存`, `创造`, `冒险`, and `旁观`. English and Chinese forms can be mixed, for example `/gamemode 创造 @s`.
+Type `/游` and press **TAB** to complete `/游戏模式`. After `/游戏模式 `, TAB offers Chinese values such as `生存`, `创造`, `冒险`, and `旁观`. By default, English command names, subcommands, and translated fixed argument values cannot be completed or executed. Entering a restricted English command displays a Chinese configuration notice in chat. Enable the option below to use English or mixed forms such as `/gamemode 创造 @s`.
 
 Commands retain their vanilla permission level, target count, and player-only restrictions. Enable cheats in single-player or use an account with the required server permissions. Commands hidden by the current environment or permissions remain subject to those rules. Set the game language to Simplified Chinese to also see vanilla feedback in Chinese.
 
@@ -78,7 +81,7 @@ Enter Chinese selector names directly, **without an `@` prefix**:
 
 The first example tags the nearest armor stand within 10 blocks. The second changes all non-spectator players to survival mode. All 21 selector option keys have Chinese names; sort orders, game modes, and advancement booleans also accept Chinese values.
 
-At a selector argument, type `选择` and press TAB to see Chinese selectors. After `选择所有实体[`, TAB suggests Chinese filter options; after `排序=` or `游戏模式=`, it suggests the corresponding Chinese values. English selectors and options remain valid and can be mixed with Chinese syntax.
+At a selector argument, type `选择` and press TAB to see Chinese selectors. After `选择所有实体[`, TAB suggests Chinese filter options; after `排序=` or `游戏模式=`, it suggests the corresponding Chinese values. Vanilla selectors such as `@e`, English selector options, and their vanilla values remain valid regardless of the English command setting.
 
 Chinese selectors work in entity/player arguments, scoreboard targets, player-profile arguments, and selector-enabled positions in messages such as `/说` and `/私信`. Message text recognizes separate selector words, leaving quoted ordinary text and complete names such as `选择所有实体玩家` unchanged. Like `@s`, `选择自身` needs a current executor and does not identify a player when used directly from the server console.
 
@@ -103,7 +106,17 @@ Resource names support common CJK characters, Extension A, compatibility ideogra
 
 ## Configuration and library API
 
-Create `config/allchineseinstructions/translations.json` to add aliases, then run `/reload` or `/重载` to rebuild the command tree:
+The first launch creates `config/allchineseinstructions-common.toml` with this default:
+
+```toml
+allowEnglishCommands = false
+```
+
+Set it to `true`, save the file, then run **`/重载`** or restart the game/server to restore English commands, subcommands, translated fixed argument values, and their TAB completion alongside Chinese syntax. Changing it back to `false` also requires a reload or restart. The setting applies to a command-tree snapshot; reloading rebuilds functions and synchronizes the new command tree with connected clients. Multiplayer uses the server's setting, so players do not need to copy the configuration file.
+
+The default restriction also affects English commands in existing `.mcfunction` files and English-only commands from other mods. Enable English commands before loading such data packs, or add Chinese aliases for other mods. Resource IDs, player/objective/team/tag names, NBT, JSON, free text, and vanilla selector syntax remain available.
+
+Create `config/allchineseinstructions/translations.json` to add aliases, then run `/重载` to rebuild the command tree. English `/reload` is available only when English commands are already enabled:
 
 ```json
 {
@@ -135,11 +148,11 @@ Command aliases, supported finite argument values, and selectors have Chinese fo
 
 **Can I use this with other mods?**
 
-The built-in dictionary covers vanilla commands. Other mods can add aliases through the API or configuration. Existing English commands remain available. Compatibility with individual command-changing mods and full modpacks still needs testing in the intended setup.
+The built-in dictionary covers vanilla commands. Other mods can add aliases through the API or configuration. English-only command names and subcommands are hidden and restricted by default; enable `allowEnglishCommands` and reload if they do not have Chinese aliases. Compatibility with individual command-changing mods and full modpacks still needs testing in the intended setup.
 
 **What has been tested?**
 
-Version **1.0.0** has passed **44 unit tests and 21 Forge GameTests**, including parsing, completion, permissions, actual command execution, Chinese functions and resource paths, parameter serialization, and client command-tree reconstruction. Graphical input-method interaction, physical TAB-key interaction, and real multiplayer connections have not been manually verified. This first release is marked **Beta**.
+Automated checks cover parsing, completion, permissions, actual command execution, Chinese functions and resource paths, parameter serialization, and client command-tree reconstruction. The repository's integration-test document records verification results for each revision. Graphical input-method interaction, physical TAB-key interaction, and real multiplayer connections have not been manually verified. This first release is marked **Beta**.
 
 **Can I include it in a modpack or modify it?**
 
@@ -156,11 +169,14 @@ Yes. The project is **MIT licensed**. Use, modification, distribution, and comme
 | 中文指令 | 原版命令与子命令、全部 45 项游戏规则、13 种参数类型的受支持取值 |
 | 中文选择器 | 全部 5 种选择器与 21 项筛选选项，支持中文 TAB 补全 |
 | 中文函数 | 函数内容、资源路径、命名空间、文件夹和函数标签 |
+| 英文指令 | 默认禁用；开启 `allowEnglishCommands` 并重载后，中英文同时可用 |
 | 许可证 | MIT |
 
-**All-Chinese Instructions（中文指令）**让 Minecraft 支持中文指令语法，同时提供供其他 Forge 模组调用的中文指令库。聊天栏、命令方块和 UTF-8 `.mcfunction` 文件均可使用中文，英文指令与中英混用仍然有效。
+**All-Chinese Instructions（中文指令）**让 Minecraft 支持中文指令语法，同时提供供其他 Forge 模组调用的中文指令库。聊天栏、命令方块和 UTF-8 `.mcfunction` 文件均可使用中文。默认隐藏并禁止英文命令关键字及已有中文译名的英文固定参数，开启配置后可恢复英文和中英混用。
 
 将 `All-Chinese-Instructions-1.20.1-1.0.0.jar` 放入游戏实例的 `mods` 文件夹。单人安装一份即可；多人游戏需要**服务端和所有客户端同时安装**。
+
+本次修订仍为 **1.0.0**，但参数同步格式已更新。升级时须为服务端和所有客户端一起替换新版 JAR，不能混用修订前后的 1.0.0 文件。
 
 ## 中文指令与补全
 
@@ -172,7 +188,7 @@ Yes. The project is **MIT licensed**. Use, modification, distribution, and comme
 | 设置晴天 | `/天气 晴天` |
 | 设置白天 | `/时间 设置 白天` |
 
-输入 `/游` 后按 **TAB** 可补全 `/游戏模式`；在 `/游戏模式 ` 后按 TAB 可选择 `生存`、`创造`、`冒险`、`旁观`等中文参数。也可以中英混用，例如 `/gamemode 创造 @s`。
+输入 `/游` 后按 **TAB** 可补全 `/游戏模式`；在 `/游戏模式 ` 后按 TAB 可选择 `生存`、`创造`、`冒险`、`旁观`等中文参数。默认不显示、不补全且不能执行英文命令、英文子命令和已翻译的英文固定参数；输入受限英文指令时，聊天框会显示配置限制提示。开启下方配置后，可使用 `/gamemode 创造 @s` 等中英混合写法。
 
 指令沿用原版权限、目标数量和仅玩家等限制。单人游戏需要开启作弊，多人游戏需要对应的管理员权限；原版按运行环境或权限隐藏的指令仍遵守原有规则。将游戏语言设为简体中文后，原版反馈信息也会显示为中文。
 
@@ -195,7 +211,7 @@ Yes. The project is **MIT licensed**. Use, modification, distribution, and comme
 
 第一条指令为 10 格内最近的盔甲架添加“命中”标签；第二条将所有非旁观模式的玩家切换为生存模式。全部 21 项筛选选项都有中文名称，排序、游戏模式及进度真假值也支持中文。
 
-在选择器位置输入 `选择` 后按 TAB 可补全中文选择器；输入 `选择所有实体[` 可补全筛选选项，在 `排序=`、`游戏模式=` 后可补全相应中文值。英文选择器、英文选项与中英混用均保留。
+在选择器位置输入 `选择` 后按 TAB 可补全中文选择器；输入 `选择所有实体[` 可补全筛选选项，在 `排序=`、`游戏模式=` 后可补全相应中文值。`@e` 等原版选择器、英文筛选选项及其原版取值始终保留，不受英文指令开关限制。
 
 中文选择器适用于实体和玩家参数、计分板目标、玩家档案参数，以及 `/说`、`/私信` 等消息中原本支持选择器的位置。消息正文只识别独立的中文选择器词，不会替换引号中的普通文字或 `选择所有实体玩家` 这样的完整名称。`选择自身` 与 `@s` 一样需要当前执行者，服务器控制台直接执行时不代表某个玩家。
 
@@ -220,7 +236,17 @@ data/示例/functions/开场.mcfunction
 
 ## 配置文件与扩展接口
 
-创建 `config/allchineseinstructions/translations.json` 可以添加自定义别名，修改后执行 `/reload` 或 `/重载` 重建指令树：
+首次启动会生成 `config/allchineseinstructions-common.toml`，默认内容为：
+
+```toml
+allowEnglishCommands = false
+```
+
+将值改为 `true` 并保存，再执行 **`/重载`** 或重启游戏／服务器，即可同时显示、补全和使用中英文命令、子命令及受支持的固定参数。改回 `false` 后同样需要重载或重启。配置随指令树生效，重载会重新解析函数并向在线客户端同步新的指令树。多人游戏以服务端配置为准，玩家无需手动复制配置文件。
+
+默认限制也适用于已有 `.mcfunction` 文件内的英文指令，以及没有中文别名的第三方英文指令。使用英文数据包前，应开启英文指令并重载；第三方指令也可通过扩展接口或词典添加中文别名。资源 ID、玩家／记分项／队伍／标签名称、NBT、JSON、自由文本和原版选择器语法不受限制。
+
+创建 `config/allchineseinstructions/translations.json` 可以添加自定义别名，修改后执行 `/重载` 重建指令树。英文 `/reload` 仅在已启用英文指令时可用：
 
 ```json
 {
@@ -244,11 +270,11 @@ data/示例/functions/开场.mcfunction
 
 **其他模组的指令也能使用中文吗？**
 
-内置词典覆盖原版指令，其他模组可通过扩展接口或配置添加别名，已有英文指令仍然有效。具体指令修改模组与整合包的兼容性仍需要在对应环境中测试。
+内置词典覆盖原版指令，其他模组可通过扩展接口或配置添加别名。默认模式会隐藏并限制没有中文别名的英文命令和子命令；需要使用时，开启 `allowEnglishCommands` 并重载。具体指令修改模组与整合包的兼容性仍需要在对应环境中测试。
 
 **这个版本测试到了什么程度？**
 
-**1.0.0** 已通过 **44 项单元测试和 21 项 Forge GameTest**，涵盖解析、补全、权限、实际指令执行、中文函数与资源路径、参数序列化和客户端指令树重建等。图形界面的输入法、实际 TAB 按键和真实多人连接尚未人工验收，因此首次发布标记为 **Beta**。
+自动化检查涵盖解析、补全、权限、实际指令执行、中文函数与资源路径、参数序列化和客户端指令树重建等；各次修订的验证结果记录在仓库的集成测试说明中。图形界面的输入法、实际 TAB 按键和真实多人连接尚未人工验收，因此首次发布标记为 **Beta**。
 
 **可以放进整合包、修改或再分发吗？**
 
@@ -293,21 +319,27 @@ data/示例/functions/开场.mcfunction
 
 <!-- CHANGELOG_START -->
 ```text
-1.0.0 — Initial release
+1.0.0 — Initial release, revised configuration defaults
 
 Chinese commands and subcommands, all 45 game rules, supported values from 13 argument types, all 5 selectors, and all 21 selector filter options.
 TAB completion, Chinese function paths and namespaces, an extensible library API, and custom command aliases.
-English and mixed-language syntax remain supported, with vanilla permissions and target restrictions.
+English command names, subcommands, and translated fixed argument values are hidden, not suggested, and blocked by default. Restricted English input displays a Chinese configuration notice.
+Set allowEnglishCommands = true in config/allchineseinstructions-common.toml, then run /重载 or restart to restore English and mixed-language syntax. Reloading also rebuilds functions and synchronizes clients.
+Existing English data-pack functions and English-only commands from other mods require this option or Chinese aliases. Resource IDs, names, NBT/JSON/free text, and vanilla selector syntax remain supported. Vanilla permissions and target restrictions are retained.
 Requires Minecraft 1.20.1, Forge 47.4.10 or a later 47.x version, and Java 17. Install on both client and server for multiplayer.
-44 unit tests and 21 Forge GameTests passed. Manual GUI and real multiplayer checks are pending.
+Version remains 1.0.0. Replace the previous 1.0.0 JAR on the server and every client together because the argument synchronization format changed.
+See the repository's integration-test document for verification results. Manual GUI and real multiplayer checks are pending.
 
-1.0.0 — 首次发布
+1.0.0 — 首次发布，修订默认配置
 
 支持中文命令与子命令、全部 45 项游戏规则、13 种参数类型的受支持取值、全部 5 种选择器和 21 项选择器筛选选项。
 支持 TAB 补全、中文函数路径与命名空间，并提供可扩展指令库和自定义别名。
-保留英文和中英混用，沿用原版权限及目标限制。
+默认隐藏、不补全并禁止英文命令、英文子命令和已翻译的英文固定参数；输入受限英文指令时显示中文配置提示。
+在 config/allchineseinstructions-common.toml 中设置 allowEnglishCommands = true，保存后执行 /重载 或重启，即可恢复英文与中英混用。重载同时重新解析函数并同步客户端。
+已有英文数据包函数及第三方仅英文指令需要开启该配置或使用中文别名。资源 ID、名称、NBT/JSON/自由文本与原版选择器语法保持可用，沿用原版权限及目标限制。
 需要 Minecraft 1.20.1、Forge 47.4.10 或更高的 47.x 版本、Java 17；多人游戏双端安装。
-44 项单元测试和 21 项 Forge GameTest 全部通过，图形界面和真实多人连接尚未人工验收。
+版本保持 1.0.0。参数同步格式已更新，须为服务端与所有客户端同时替换旧的 1.0.0 JAR。
+验证结果见仓库内的集成测试说明；图形界面和真实多人连接尚未人工验收。
 ```
 <!-- CHANGELOG_END -->
 
@@ -328,9 +360,9 @@ All-Chinese Instructions - Overview
 Caption：
 
 ```text
-Chinese commands, selectors, TAB completion and Chinese function paths for Minecraft 1.20.1 Forge. AI-generated promotional artwork; not a gameplay screenshot.
+Chinese commands, selectors, TAB completion and function paths for Minecraft 1.20.1 Forge. English commands can be enabled in configuration. AI-generated promotional artwork; not a gameplay screenshot.
 
-适用于 Minecraft 1.20.1 Forge 的中文指令、中文选择器、TAB 补全和中文函数路径。AI 生成宣传图，不是游戏实测截图。
+适用于 Minecraft 1.20.1 Forge 的中文指令、中文选择器、TAB 补全和中文函数路径；英文指令可通过配置开启。AI 生成宣传图，不是游戏实测截图。
 ```
 
 ### 指令示例图
@@ -346,9 +378,9 @@ Chinese Command Examples
 Caption：
 
 ```text
-Chinese command, game rule and function examples. Typeset reference guide, not an in-game screenshot. English syntax remains supported; existing resource IDs keep their original names.
+Chinese command, game rule and function examples. Typeset reference guide, not an in-game screenshot. English commands require allowEnglishCommands = true and a reload; existing resource IDs keep their original names.
 
-中文命令、游戏规则和函数示例。排版说明图，不是游戏内截图；英文写法仍可使用，已有资源 ID 保持原名。
+中文命令、游戏规则和函数示例。排版说明图，不是游戏内截图；英文指令需设置 allowEnglishCommands = true 并重载，已有资源 ID 保持原名。
 ```
 
 ### 中文选择器图
@@ -364,9 +396,9 @@ Chinese Selectors - Version 1.0.0
 Caption：
 
 ```text
-All five vanilla selectors have Chinese aliases without an @ prefix, with Chinese filter options and TAB completion. Typeset reference guide, not an in-game screenshot. Resource IDs and NBT keys retain their original spelling.
+All five vanilla selectors have Chinese aliases without an @ prefix, with Chinese filter options and TAB completion. Typeset reference guide, not an in-game screenshot. Vanilla selectors and filter options remain valid in both command modes; resource IDs and NBT keys retain their original spelling.
 
-全部五种原版选择器支持不带 @ 的中文写法，以及中文筛选选项和 TAB 补全。排版说明图，不是游戏内截图；资源 ID 和 NBT 字段名保持原样。
+全部五种原版选择器支持不带 @ 的中文写法，以及中文筛选选项和 TAB 补全。排版说明图，不是游戏内截图；两种配置模式均保留原版选择器和筛选选项，资源 ID 和 NBT 字段名保持原样。
 ```
 
 ## 6 Modrinth 项目与版本字段
@@ -398,21 +430,23 @@ Modrinth 与 CurseForge 共用上面的项目介绍、首发日志和图片；�
 | Changelog | 第 4 节双语首发日志，去掉代码围栏和提取标记 |
 | Gallery | 第 5 节三张图片及对应标题和说明；保留 AI 生成宣传图说明 |
 
-## 7 本次上传记录（2026-10-18）
+## 7 修订替换与上传记录（2026-10-18）
+
+本次修订仍为 **1.0.0**，加入默认关闭的 `allowEnglishCommands` 配置。以下记录区分接口接受上传、完成旧文件替换和平台审核，避免把上传成功误写成已公开发布。
 
 | 平台 | 项目与文件 | 已确认结果 |
 | --- | --- | --- |
-| Modrinth | [项目页面](https://modrinth.com/mod/all-chinese-instructions) · 项目 ID `kcuW0c7V` · [1.0.0 文件](https://modrinth.com/mod/all-chinese-instructions/version/l51uB4tz) | 已上传 1.0.0 Beta，保存完整双语介绍、`/中文` 图标和三张展示图，MIT，Minecraft 1.20.1 / Forge，双端必装；已提交公开审核，回读状态为 `processing`。 |
-| CurseForge | [作者后台文件列表](https://authors.curseforge.com/#/projects/1751560/files) · 项目 ID `1751560` · 文件 ID `9235853` | 上传接口已接受 1.0.0 Beta JAR 及双语日志，版本标签为 Minecraft 1.20.1、Forge、Java 17、Client、Server，审核通过后自动发布。尚未确认公开审核结果。 |
-| GitHub | [公开源码仓库](https://github.com/zz123456789/All-Chinese-Instructions) | MIT 源码及本单一发布文案文件。 |
+| Modrinth | [项目页面](https://modrinth.com/mod/all-chinese-instructions) · 项目 ID `kcuW0c7V` · [新版 1.0.0](https://modrinth.com/mod/all-chinese-instructions/version/x3LoXkDD) | 新版本 ID `x3LoXkDD`，Beta；旧版本 `l51uB4tz` 已删除。已回读核对新 JAR 的 SHA-512、双端必装状态、双语介绍和三张图库说明。项目状态为 `processing`，仍待审核。 |
+| CurseForge | [作者后台文件列表](https://authors.curseforge.com/#/projects/1751560/files) · 项目 ID `1751560` · 新文件 ID `9236776` | 新版 1.0.0 Beta 与双语日志已获上传接口接受；旧文件 `9235853` 尚未删除或归档，替换未全部完成。新文件审核状态未能确认。 |
+| GitHub | [公开源码仓库](https://github.com/zz123456789/All-Chinese-Instructions) | 本次源码、MIT 许可证、配置说明、测试结果、新 JAR 和六文件素材包一并同步至 `main`，版本保持 1.0.0。 |
 
-**CurseForge 尚待完成：** 本次新整理的项目介绍尚未保存到 CurseForge 页面，图库状态也未能核验。Windows 浏览器操作因工具无法可靠识别当前网址而被停止；发布接口仍完成了 JAR 与版本日志上传。后续在现有项目中用第 2 节正文更新介绍，并核对第 5 节图库即可，不需要再次上传 JAR。
+**CurseForge 待完成：** 删除或归档旧文件 `9235853`，保存第 1 节 Summary 和第 2 节新正文，核对第 5 节图库说明。浏览器连接返回 `Debugger unattached`；Windows 界面工具因无法可靠识别当前浏览器网址而停止操作，因此未将这些后台操作标记为完成。无需再次上传已经接收的新文件 `9236776`。
 
-**文件校验：** Modrinth 返回的主文件 SHA-512 与本地待上传 JAR 一致。CurseForge 上传回执记录使用同一个 JAR；尚未从平台下载回验。
+**本次修订 JAR 校验：** Modrinth 返回的 SHA-512 与本地构建一致；CurseForge 上传回执记录使用同一份新 JAR，尚未从平台下载回验。源码验证通过 64 项单元测试，默认关闭和开启英文两种配置各通过 24 项 Forge GameTest；图形界面和真实多人连接仍待人工验收。
 
 ```text
 All-Chinese-Instructions-1.20.1-1.0.0.jar
-SHA-512: f75f33411335f4f69dcfe7e0d8311eacc5e12812108ba154f0d0c9a823fdd882fdbacd8c6a0f835940669533e213c71e92bdc1513446d2135a4918f0f734483a
+SHA-512: 982988dc094fcd548bed040da729bb715e5b727ef997201773ac9151e9c06dfdfdc8b9bf70ad0b1e895c8382fc14b85c273f4e5582aeba3e70362ce3fa9470fe
 ```
 
 发布凭据没有写入本文件、源码、JAR 或发布素材包。

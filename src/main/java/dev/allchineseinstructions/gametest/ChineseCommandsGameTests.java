@@ -8,6 +8,8 @@ import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.RootCommandNode;
+import dev.allchineseinstructions.command.EnglishCommandPolicy;
+import dev.allchineseinstructions.config.ChineseCommandsConfig;
 import io.netty.buffer.Unpooled;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +19,8 @@ import net.minecraft.FileUtil;
 import net.minecraft.commands.CommandBuildContext;
 import net.minecraft.commands.CommandFunction;
 import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.CommandSource;
+import net.minecraft.network.chat.Component;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.commands.arguments.selector.EntitySelector;
 import net.minecraft.commands.synchronization.SuggestionProviders;
@@ -70,9 +74,11 @@ public final class ChineseCommandsGameTests {
         CommandDispatcher<CommandSourceStack> dispatcher = dispatcher(helper);
         assertGameMode(helper, dispatcher, source(helper), "游戏模式 创造", GameType.CREATIVE);
         assertGameMode(helper, dispatcher, source(helper), "游戏模式 生存", GameType.SURVIVAL);
-        assertGameMode(helper, dispatcher, source(helper), "gamemode 创造", GameType.CREATIVE);
-        assertGameMode(helper, dispatcher, source(helper), "游戏模式 creative", GameType.CREATIVE);
-        assertGameMode(helper, dispatcher, source(helper), "gamemode creative", GameType.CREATIVE);
+        if (ChineseCommandsConfig.allowEnglishCommands()) {
+            assertGameMode(helper, dispatcher, source(helper), "gamemode 创造", GameType.CREATIVE);
+            assertGameMode(helper, dispatcher, source(helper), "游戏模式 creative", GameType.CREATIVE);
+            assertGameMode(helper, dispatcher, source(helper), "gamemode creative", GameType.CREATIVE);
+        }
         helper.succeed();
     }
 
@@ -81,9 +87,12 @@ public final class ChineseCommandsGameTests {
         var entity = helper.spawn(EntityType.ARMOR_STAND, 1, 1, 1);
         CommandSourceStack source = source(helper).withEntity(entity);
         try {
-            int english = dispatcher(helper).execute("execute as @s at @s run gamerule doDaylightCycle", source);
+            int expected = helper.getLevel().getGameRules().getBoolean(GameRules.RULE_DAYLIGHT) ? 1 : 0;
+            if (ChineseCommandsConfig.allowEnglishCommands()) {
+                expected = dispatcher(helper).execute("execute as @s at @s run gamerule doDaylightCycle", source);
+            }
             int chinese = dispatcher(helper).execute("执行 作为 @s 位于 @s 运行 游戏规则 昼夜更替", source);
-            helper.assertTrue(chinese == english, "Chinese execute redirects changed the command result");
+            helper.assertTrue(chinese == expected, "Chinese execute redirects changed the command result");
         } finally {
             entity.discard();
         }
@@ -234,12 +243,86 @@ public final class ChineseCommandsGameTests {
                         "Decoded command tree lost Chinese selector completion/ranges for: " + expected[0]
                                 + "; suggestions: " + completions.getList());
             }
-            helper.assertTrue(client.getRoot().getChild("gamemode") != null,
-                    "Vanilla commands disappeared after packet decoding");
+            helper.assertTrue((client.getRoot().getChild("gamemode") != null)
+                            == ChineseCommandsConfig.allowEnglishCommands(),
+                    "Client command visibility disagrees with the server configuration");
+            Suggestions modes = client.getCompletionSuggestions(client.parse("游戏模式 ", source)).join();
+            helper.assertTrue(modes.getList().stream().anyMatch(s -> s.getText().equals("creative"))
+                            == ChineseCommandsConfig.allowEnglishCommands(),
+                    "Argument policy was not preserved in the client command packet");
             helper.assertTrue(buffer.readableBytes() == 0, "Command packet serializer left unread bytes");
         } finally {
             buffer.release();
         }
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = NAMESPACE, template = "empty")
+    public static void englishPolicyFeedback(GameTestHelper helper) throws CommandSyntaxException {
+        boolean allowed = ChineseCommandsConfig.allowEnglishCommands();
+        List<String> messages = new ArrayList<>();
+        CommandSource recordingSource = new CommandSource() {
+            public void sendSystemMessage(Component message) { messages.add(message.getString()); }
+            public boolean acceptsSuccess() { return true; }
+            public boolean acceptsFailure() { return true; }
+            public boolean shouldInformAdmins() { return false; }
+        };
+        var server = helper.getLevel().getServer();
+        var source = server.createCommandSourceStack().withSource(recordingSource).withPermission(4);
+        for (String input : List.of("gamerule doDaylightCycle", "执行 run 游戏规则 昼夜更替",
+                "执行 运行 gamerule doDaylightCycle", "游戏模式 creative")) {
+            messages.clear();
+            server.getCommands().performPrefixedCommand(source, input);
+            helper.assertTrue(messages.stream().anyMatch(m -> m.contains("英文指令已被配置文件限制")) == !allowed,
+                    "Wrong English restriction feedback for " + input + ": " + messages);
+        }
+        // Free names and resource IDs must never be classified by whole-text ASCII matching.
+        var entity = helper.spawn(EntityType.ARMOR_STAND, 1, 1, 1);
+        try {
+            dispatcher(helper).execute("标签 选择自身 添加 EnglishTag", source.withEntity(entity));
+            helper.assertTrue(entity.getTags().contains("EnglishTag"), "English free-form tag was blocked");
+            ParseResults<CommandSourceStack> give = dispatcher(helper).parse("给予 选择所有玩家 minecraft:diamond 1", source);
+            helper.assertFalse(give.getReader().canRead(), "Existing item resource ID was blocked");
+        } finally { entity.discard(); }
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = NAMESPACE, template = "empty")
+    public static void englishPolicySuggestions(GameTestHelper helper) {
+        var dispatcher = dispatcher(helper);
+        var source = source(helper);
+        boolean allowed = ChineseCommandsConfig.allowEnglishCommands();
+        String[][] cases = {{"game", "gamemode"}, {"执行 ", "run"},
+                {"执行 运行 game", "gamemode"}, {"游戏模式 ", "creative"}};
+        for (String[] test : cases) {
+            var parse = dispatcher.parse(test[0], source);
+            Suggestions result = EnglishCommandPolicy.filterSuggestions(parse,
+                    dispatcher.getCompletionSuggestions(parse).join(), test[0].length());
+            helper.assertTrue(result.getList().stream().anyMatch(s -> s.getText().equals(test[1])) == allowed,
+                    "Server completion policy mismatch for " + test[0] + ": " + result.getList());
+        }
+        var client = new CommandDispatcher<>(clientTree(dispatcher, source));
+        for (String[] test : cases) {
+            Suggestions result = client.getCompletionSuggestions(client.parse(test[0], source)).join();
+            helper.assertTrue(result.getList().stream().anyMatch(s -> s.getText().equals(test[1])) == allowed,
+                    "Client completion policy mismatch for " + test[0]);
+        }
+        helper.succeed();
+    }
+
+    @GameTest(templateNamespace = NAMESPACE, template = "empty")
+    public static void englishFunctionPolicy(GameTestHelper helper) throws Exception {
+        var dispatcher = dispatcher(helper);
+        var source = source(helper);
+        CommandFunction.fromLines(new ResourceLocation("示例", "中文策略"), dispatcher, source,
+                List.of("游戏规则 昼夜更替", "执行 运行 游戏规则 昼夜更替"));
+        boolean accepted = true;
+        try {
+            CommandFunction.fromLines(new ResourceLocation("示例", "英文策略"), dispatcher, source,
+                    List.of("gamerule doDaylightCycle"));
+        } catch (IllegalArgumentException expected) { accepted = false; }
+        helper.assertTrue(accepted == ChineseCommandsConfig.allowEnglishCommands(),
+                "Loaded function policy differs from interactive commands");
         helper.succeed();
     }
 

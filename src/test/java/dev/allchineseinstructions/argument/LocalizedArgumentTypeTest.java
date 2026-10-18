@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -156,6 +157,114 @@ class LocalizedArgumentTypeTest {
         assertEquals(Set.of("true", "false", "真", "是", "开启", "假", "否", "关闭"),
                 suggestions.getList().stream().map(Suggestion::getText).collect(Collectors.toSet()));
         assertEquals(StringRange.at(4), suggestions.getRange());
+    }
+
+    @Test
+    void disabledEnglishRejectsTranslatedCanonicalTokensWithHelpfulOriginalContext() throws Exception {
+        var argument = new LocalizedArgumentType<>(BoolArgumentType.bool(), BOOL_ALIASES, false);
+        for (String token : List.of("true", "false")) {
+            StringReader reader = new StringReader("cmd " + token + " next");
+            reader.setCursor(4);
+            CommandSyntaxException error = assertThrows(CommandSyntaxException.class, () -> argument.parse(reader));
+            assertEquals("英文指令已被配置文件限制，请将 config/allchineseinstructions-common.toml 中的 allowEnglishCommands 改为 true，然后执行 /重载 或重启游戏/服务器。",
+                    error.getRawMessage().getString());
+            assertEquals(reader.getString(), error.getInput());
+            assertEquals(4, error.getCursor());
+            assertEquals(4, reader.getCursor());
+        }
+        StringReader reader = new StringReader("cmd 开启 next");
+        reader.setCursor(4);
+        assertTrue(argument.parse(reader));
+        assertEquals(" next", reader.getRemaining());
+        assertFalse(argument.parse(new StringReader("关闭")));
+    }
+
+    @Test
+    void booleanSupplierReflectsUpdatedEnglishPolicy() throws Exception {
+        AtomicBoolean allowed = new AtomicBoolean(false);
+        var argument = new LocalizedArgumentType<>(BoolArgumentType.bool(), BOOL_ALIASES, allowed::get);
+        assertFalse(argument.isEnglishAllowed());
+        assertThrows(CommandSyntaxException.class, () -> argument.parse(new StringReader("true")));
+        allowed.set(true);
+        assertTrue(argument.isEnglishAllowed());
+        assertTrue(argument.parse(new StringReader("true")));
+        assertTrue(argument.parse(new StringReader("开启")));
+        assertTrue(argument.listSuggestions(null, new SuggestionsBuilder("cmd t", 4)).join().getList()
+                .stream().anyMatch(suggestion -> suggestion.getText().equals("true")));
+    }
+
+    @Test
+    void disabledEnglishLeavesFreeTextRegistryIdsAndUntranslatedTokensUntouched() throws Exception {
+        var freeText = new LocalizedArgumentType<>(StringArgumentType.greedyString(), Map.of(), false);
+        for (String input : List.of("true", "minecraft:diamond", "PlayerName", "true message 中文")) {
+            assertEquals(input, freeText.parse(new StringReader(input)));
+        }
+        var word = new LocalizedArgumentType<>(StringArgumentType.word(), BOOL_ALIASES, false);
+        assertEquals("trueish", word.parse(new StringReader("trueish")));
+        assertEquals("PlayerName", word.parse(new StringReader("PlayerName")));
+        assertEquals("生存积分", word.parse(new StringReader("生存积分")));
+        var untranslated = new LocalizedArgumentType<>(StringArgumentType.word(), Map.of("name", List.of()), false);
+        assertEquals("name", untranslated.parse(new StringReader("name")));
+        var numbers = new LocalizedArgumentType<>(IntegerArgumentType.integer(), Map.of("1", List.of("一")), false);
+        assertEquals(1, numbers.parse(new StringReader("1")));
+        assertEquals(1, numbers.parse(new StringReader("一")));
+    }
+
+    @Test
+    void disabledEnglishSuggestsOnlyChineseTokensAndPreservesChinesePrefixRange() {
+        var argument = new LocalizedArgumentType<>(BoolArgumentType.bool(), BOOL_ALIASES, false);
+        Suggestions suggestions = argument.listSuggestions(null, new SuggestionsBuilder("cmd ", 4)).join();
+        assertEquals(Set.of("真", "是", "开启", "假", "否", "关闭"), suggestions.getList().stream()
+                .map(Suggestion::getText).collect(Collectors.toSet()));
+        assertTrue(argument.listSuggestions(null, new SuggestionsBuilder("cmd t", 4)).join().isEmpty());
+        Suggestion chinese = argument.listSuggestions(null, new SuggestionsBuilder("cmd 开", 4)).join()
+                .getList().get(0);
+        assertEquals(StringRange.between(4, 5), chinese.getRange());
+        assertEquals("cmd 开启", chinese.apply("cmd 开"));
+    }
+
+    @Test
+    void disabledEnglishCustomSuggestionsFilterOnlyExactTranslationsAndKeepRangesAndTooltips() {
+        var argument = new LocalizedArgumentType<>(BoolArgumentType.bool(), BOOL_ALIASES, false);
+        String input = "cmd ab";
+        LiteralMessage tooltip = new LiteralMessage("unrelated value");
+        Suggestions original = new Suggestions(StringRange.between(5, 6), List.of(
+                new Suggestion(StringRange.between(5, 6), "true"),
+                new Suggestion(StringRange.between(5, 6), "false"),
+                new Suggestion(StringRange.between(5, 6), "trueish", tooltip),
+                new Suggestion(StringRange.between(5, 6), "minecraft:diamond")));
+        Suggestions filtered = argument.filterSuggestions(original, input);
+        assertEquals(Set.of("trueish", "minecraft:diamond"), filtered.getList().stream()
+                .map(Suggestion::getText).collect(Collectors.toSet()));
+        assertEquals(StringRange.between(5, 6), filtered.getRange());
+        Suggestion surviving = filtered.getList().stream().filter(value -> value.getText().equals("trueish"))
+                .findFirst().orElseThrow();
+        assertSame(tooltip, surviving.getTooltip());
+        assertEquals("cmd atrueish", surviving.apply(input));
+        assertSame(original, bool().filterSuggestions(original, input));
+    }
+
+    @Test
+    void disabledEnglishOmitsCanonicalExamplesButKeepsChineseExamples() {
+        var argument = new LocalizedArgumentType<>(BoolArgumentType.bool(), BOOL_ALIASES, false);
+        assertEquals(Set.of("真", "是", "开启", "假", "否", "关闭"), Set.copyOf(argument.getExamples()));
+        assertTrue(bool().getExamples().containsAll(List.of("true", "false", "真", "假")));
+    }
+
+    @Test
+    void disabledEnglishAlsoBlocksUppercaseCanonicalTokensAndSuggestions() throws Exception {
+        var aliases = Map.of("red", List.of("红色"));
+        var argument = new LocalizedArgumentType<>(StringArgumentType.word(), aliases, false);
+        for (String token : List.of("RED", "Red", "rEd")) {
+            assertThrows(CommandSyntaxException.class, () -> argument.parse(new StringReader(token)));
+        }
+        assertEquals("red", argument.parse(new StringReader("红色")));
+        assertEquals("RED", new LocalizedArgumentType<>(StringArgumentType.word(), aliases, true)
+                .parse(new StringReader("RED")));
+        Suggestions original = new SuggestionsBuilder("cmd ", 4).suggest("RED").suggest("Red")
+                .suggest("Redstone").suggest("红色").build();
+        assertEquals(Set.of("Redstone", "红色"), argument.filterSuggestions(original, "cmd ").getList().stream()
+                .map(Suggestion::getText).collect(Collectors.toSet()));
     }
 
     @Test

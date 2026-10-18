@@ -1,6 +1,14 @@
 # All-Chinese Instructions 中文指令对照表
 
-适用版本：Minecraft Java 1.20.1 / Forge 47.x。词典根据本机缓存的 Minecraft 1.20.1（Forge 47.4.10、官方映射）源代码核对：`Commands`、`net.minecraft.server.commands`、`GameRules`、`ArgumentTypeInfos` 和各参数类型。表中中文均为原命令的别名，英文形式继续有效。
+适用版本：Minecraft Java 1.20.1 / Forge 47.x。词典根据本机缓存的 Minecraft 1.20.1（Forge 47.4.10、官方映射）源代码核对：`Commands`、`net.minecraft.server.commands`、`GameRules`、`ArgumentTypeInfos` 和各参数类型。表中英文用于对照，默认只显示、补全并接受中文命令关键字及受支持固定参数的中文写法。
+
+## 英文指令配置
+
+`config/allchineseinstructions-common.toml` 中的 `allowEnglishCommands` 默认为 `false`。英文顶级命令、英文子命令和已有中文译名的英文固定参数被限制，输入受限指令会显示中文提示。将值改为 `true`，保存后执行 `/重载` 或重启，才能同时使用中英文指令及混合写法；改回 `false` 也需要重载或重启。多人游戏采用服务端配置，重建指令树时会同步客户端并重新解析数据包函数。
+
+英文 `.mcfunction` 指令及没有中文别名的第三方英文指令也受此限制。需要使用时启用英文指令，或为第三方指令添加中文别名。资源 ID、名称、NBT、JSON、自由文本，以及原版 `@e` 等选择器、筛选选项及其取值不受此开关限制。
+
+本次修订保持版本 **1.0.0**；因参数同步格式已更新，服务端与所有客户端须一起替换新版 JAR，不能与旧的 1.0.0 混用。
 
 ## 使用示例
 
@@ -29,7 +37,7 @@
 
 ## 中文选择器与筛选选项
 
-全部 5 种原版选择器可以直接写成中文，无需 `@` 前缀；原版写法继续有效。
+全部 5 种原版选择器可以直接写成中文，无需 `@` 前缀；原版写法继续有效，不受 `allowEnglishCommands` 开关限制。
 
 | 原版选择器 | 中文写法 | 含义 |
 | --- | --- | --- |
@@ -65,7 +73,7 @@
 | `advancements` | `进度` | `进度={minecraft:story/mine_stone=真}` |
 | `predicate` | `谓词` | 引用已存在的谓词资源 ID |
 
-排序值对应 `最近=nearest`、`最远=furthest`、`随机=random`、`任意=arbitrary`；游戏模式对应 `生存=survival`、`创造=creative`、`冒险=adventure`、`旁观/旁观者=spectator`。进度及其判据的真假值支持 `真=true`、`假=false`，例如 `进度={minecraft:story/mine_stone={get_stone=真}}`。这些有限值仍可使用英文。
+排序值对应 `最近=nearest`、`最远=furthest`、`随机=random`、`任意=arbitrary`；游戏模式对应 `生存=survival`、`创造=creative`、`冒险=adventure`、`旁观/旁观者=spectator`。进度及其判据的真假值支持 `真=true`、`假=false`，例如 `进度={minecraft:story/mine_stone={get_stone=真}}`。选择器内部的这些值仍可使用英文；指令参数位置的英文固定值（例如 `/游戏模式 creative`）则需要启用英文指令配置。
 
 ```mcfunction
 给予 选择最近玩家 minecraft:diamond 1
